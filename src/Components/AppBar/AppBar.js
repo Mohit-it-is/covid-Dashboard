@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -26,21 +26,22 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function ButtonAppBar() {
+  const [selectedCountryValue , setSelectedCountryValue] = useState(null);
   const classes = useStyles();
-  console.log(country_list);
   return (
     <div className={classes.root}>
       <AppBar position="static"  style={{ background: 'transparent', boxShadow: 'none'}}>
-        <Toolbar>
+        <Toolbar style = {{height: '64px'}}>
           <IconButton edge="start" className={classes.menuButton} color="#999" aria-label="menu">
             <MenuIcon />
           </IconButton>
           <Typography> <span className = "label">DashBoard </span> </Typography>
           <div style={{ width: 300, marginLeft:'auto'}}>
             <Autocomplete
-              id="free-solo-demo"
+              id="search-by-country"
               freeSolo
               options={country_list.map((option) => option)}
+              onChange= {(event, value) => setSelectedCountryValue(value)}
               renderInput={(params) => (
               <TextField {...params} label="Search By Country" margin="normal" variant="outlined" />
             )}

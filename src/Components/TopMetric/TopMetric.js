@@ -3,6 +3,8 @@ import Grid from "@material-ui/core/Grid";
 import { withStyles } from "@material-ui/styles";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
+import NumberFormat from 'react-number-format';
+import { getAllStats } from '../../Services/Service';
 import "./TopMetric.css";
 
 const useStyles = (theme) => ({
@@ -14,16 +16,41 @@ const useStyles = (theme) => ({
 class TopMetric extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      totalCases: '-',
+      recoverdCases: '-',
+      activeCases: '-',
+      totalDeaths: '-',
+    };
+  }
+
+  componentDidMount() {
+    this.getTopMetricData();
+  }
+
+  getTopMetricData() {
+    getAllStats((res) => {
+      this.onRecieveData(res.data);
+    });
+  }
+
+  onRecieveData(res) {
+    this.setState({
+      totalCases: res.cases,
+      recoverdCases: res.recovered,
+      activeCases: res.active,
+      totalDeaths: res.deaths
+    })
   }
 
   renderWidget() {
     const { classes } = this.props;
+    const { totalCases, recoverdCases, activeCases, totalDeaths } = this.state;
 
     return (
       <div className="topMetric-container">
         <Grid container spacing={5}>
-          <Grid item xs={3}>
+          <Grid item lg={3} sm = {6} xs={12}>
             <Paper className={classes.paper} elevation={3}>
               <div className="card-header">
                 <p>
@@ -36,14 +63,14 @@ class TopMetric extends Component {
                 </p>
               </div>
               <div className="card-body">
-                <Typography variant="h4"> 100,000,00 </Typography>
+                <Typography variant="h4"> <NumberFormat value={totalCases} displayType={'text'} thousandSeparator={true} /> </Typography>
               </div>
               <div className="card-footer">
                 <p> Today Cases </p>
               </div>
             </Paper>
           </Grid>
-          <Grid item xs={3}>
+          <Grid item lg={3} sm = {6} xs={12}>
             <Paper className={classes.paper} elevation={3}>
               <div className="card-header">
                 <p>
@@ -51,14 +78,14 @@ class TopMetric extends Component {
                 </p>
               </div>
               <div className="card-body">
-                <Typography variant="h4"> 100,000,00 </Typography>
+                <Typography variant="h4"> <NumberFormat value={recoverdCases} displayType={'text'} thousandSeparator={true} /> </Typography>
               </div>
               <div className="card-footer">
                 <p> Today Cases </p>
               </div>
             </Paper>
           </Grid>
-          <Grid item xs={3}>
+          <Grid item lg={3} sm = {6} xs={12}>
             <Paper className={classes.paper} elevation={3}>
               <div className="card-header">
                 <p>
@@ -66,14 +93,14 @@ class TopMetric extends Component {
                 </p>
               </div>
               <div className="card-body">
-                <Typography variant="h4"> 100,000,00 </Typography>
+                <Typography variant="h4"> <NumberFormat value={activeCases} displayType={'text'} thousandSeparator={true} /> </Typography>
               </div>
               <div className="card-footer">
                 <p> Today Cases </p>
               </div>
             </Paper>
           </Grid>
-          <Grid item xs={3}>
+          <Grid item lg={3} sm = {6} xs={12}>
             <Paper className={classes.paper} elevation={3}>
               <div className="card-header">
                 <p>
@@ -81,7 +108,7 @@ class TopMetric extends Component {
                 </p>
               </div>
               <div className="card-body">
-                <Typography variant="h4"> 100,000,00 </Typography>
+                <Typography variant="h4"> <NumberFormat value={ totalDeaths } displayType={'text'} thousandSeparator={true} /> </Typography>
               </div>
               <div className="card-footer">
                 <p> Today Cases </p>

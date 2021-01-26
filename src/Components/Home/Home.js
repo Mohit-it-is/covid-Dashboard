@@ -12,11 +12,7 @@ class HomePage extends Component {
     render(){
         return (
         <div className = "home-container">
-            <Grid container spacing = {3}>
-                <Grid item xs = {12}>
-                    <TopMetric/>
-                </Grid>
-            </Grid>
+            <TopMetric/>
         </div>
         );
     }
